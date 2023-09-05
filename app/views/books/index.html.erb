@@ -1,0 +1,52 @@
+<main>
+  <div class="result-create">
+      <p><%= flash[:notice] %></p>
+  </div>
+  <h1 class = "index-list">Books</h1>
+  <table class = "book-list">
+    <tr class = "book-list-header">
+      <th>Title</th>
+      <th>Body</th>
+    </tr>
+    <% @books.each do |books| %>
+    <tr class = "book-list-content">
+      
+        <div class = "book-list-title">
+          <td><%= books.title %></td>
+        </div>
+        <div class = "book-list-body">
+          <td><%= books.body %></td>
+        </div>
+        <div class = "book-list-menu">
+          <td><%= link_to "Show",book_path(books.id) %></td>
+          <td><%= link_to "Edit",edit_book_path(books.id) %></td>
+          <td><%= link_to "Destroy",book_path(books.id) ,method: :delete,"data-confirm" => "Are you sure?"%></td>
+        </div>
+      
+    </tr>
+    <% end %>
+  </table>
+ 
+  
+  <div class = "book-new">
+    <h2 class="index-create">New Book</h2>
+    
+    <% if @book.errors.any? %>
+      <div class="create-error">
+        <h3 class="create-error-count"><%= @book.errors.count %> errors prohibited this book from being saved:</h3>
+        <ul class="create-error-message">
+          <% @book.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+          <% end%>
+        </ul>
+      </div>
+    <% end %>
+    <%= form_with model: @book do |f| %>
+      <p class="create-title">Title</p>
+      <%= f.text_field :title %>
+      <p class="create-body">Body</p>
+      <%= f.text_area :body %></br>
+      <div class="create-submit"><%= f.submit "Create Book" %></div>
+    <% end %>
+  </div>
+</main>
